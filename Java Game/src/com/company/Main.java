@@ -2,7 +2,7 @@ package com.company;
 
 import Heroes.CounterTerorist;
 import Heroes.CtTypes;
-import Heroes.TeroTypes;
+import Villains.TeroTypes;
 import Villains.Terorist;
 import fight.Fight;
 
@@ -14,9 +14,8 @@ public class Main {
         CtTypes nameCt = ct.getCtName();
         System.out.println(nameCt + "\n" + "VS");
         Terorist tero = new Terorist();
-        TeroTypes nameTero = tero.TeroName();
+        TeroTypes nameTero = tero.teroName();
         System.out.println("TERORIST: " + nameTero);
         Fight.startFight(nameCt, nameTero);
-
     }
 }

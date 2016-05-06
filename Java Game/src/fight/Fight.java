@@ -1,10 +1,12 @@
 package fight;
 
 import Artifacts.AK47;
+import Artifacts.Artifact;
+import Artifacts.Deagle;
 import Artifacts.M4A1;
 import Heroes.CounterTerorist;
 import Heroes.CtTypes;
-import Heroes.TeroTypes;
+import Villains.TeroTypes;
 import Villains.Terorist;
 
 import java.util.Random;
@@ -18,36 +20,47 @@ public class Fight {
 
         Terorist terorist = new Terorist();
         CounterTerorist counterTerorist = new CounterTerorist();
-        int teroLife = terorist.getLife(), counterLife = terorist.getLife(), ak47Bullets, m4a1Bullets;
-        AK47 ak47 = new AK47();
-        ak47Bullets = ak47.getBullets();
-        M4A1 m4a1 = new M4A1();
-        m4a1Bullets = m4a1.getBullets();
-        while (teroLife > 0 && counterLife > 0  && (ak47Bullets > 0 || m4a1Bullets > 0)) {
+
+        terorist.initiateEquipement(new AK47(), new Deagle());
+        counterTerorist.initiateEquipement(new M4A1(), new Deagle());
+
+        int teroLife = counterTerorist.getLife(), counterLife = counterTerorist.getLife(), TeroBullets, CounterBullets;
+        Artifact teroWeapon = terorist.getWeapon();
+        Artifact counterTeroWeapon = counterTerorist.getWeapon();
+
+        System.out.println("Tero weapon = " + teroWeapon.getName());
+        System.out.println("ct WEAPON = " + counterTeroWeapon.getName());
+
+        TeroBullets = teroWeapon.getBullets();
+        CounterBullets = counterTeroWeapon.getBullets();
+
+       while (teroLife > 0 && counterLife > 0  && (TeroBullets > 0 || CounterBullets > 0)) {
             int turn = random.nextInt(3);
-            if (turn == 1 && ak47Bullets > 0) {
-                counterLife -= ak47.getDamage();
-                Thread.sleep(4000);
+            if (turn == 1 && TeroBullets > 0) {
+                counterLife -= teroWeapon.getDamage();
+                Thread.sleep(2000);
                 System.out.println(counterTero + " was shooted" + "\n");
-            } else if (turn == 2 && m4a1Bullets > 0) {
-                teroLife -= m4a1.getDamage();
-                Thread.sleep(4000);
+            } else if (turn == 2 && CounterBullets > 0) {
+                teroLife -= counterTeroWeapon.getDamage();
+                Thread.sleep(2000);
                 System.out.println(tero + " was shooted" + "\n");
             } else if (turn == 3) {
-                if (m4a1Bullets > 0) {
-                    Thread.sleep(4000);
-                    teroLife -= m4a1.getDamage();
+                if (CounterBullets > 0) {
+                    Thread.sleep(2000);
+                    teroLife -= teroWeapon.getDamage();
                 }
-                if (ak47Bullets > 0){
-                    Thread.sleep(4000);
-                    counterLife -= ak47.getDamage();
+                if (TeroBullets > 0){
+                    Thread.sleep(2000);
+                    counterLife -= counterTeroWeapon.getDamage();
                 }
+                System.out.println("MISSED");
             }
-            Thread.sleep(4000);
+            Thread.sleep(2000);
             System.out.println(tero + " life " + teroLife + "\n" + counterTero + " life " + counterLife + "\n");
-            ak47Bullets -= 3;
-            m4a1Bullets -= 3;
+           TeroBullets -= 3;
+           CounterBullets -= 3;
         }
+        Thread.sleep(1000);
         if (teroLife > 0)
             System.out.println(tero + " WIN");
         else if (counterLife > 0)
